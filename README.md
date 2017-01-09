@@ -16,6 +16,7 @@ Base html, htaccess and tips from [HTML 5 Boilerplate ](https://html5boilerplate
 - [Airbnb CSS](https://github.com/airbnb/css)
 - [Airbnb JS](https://github.com/airbnb/javascript)
 - BEM, OOCSS, Flexgrid
+- SEO
 
 ###### Pre - production
 Cheklist before launching a website :
@@ -25,6 +26,7 @@ Cheklist before launching a website :
 - Image Sprites
 - Image "minify" : Image Optim + Jpg Mini
 - jshint
+- SEO
 - Analytics code (Configure it for spam bots) + test in the dashboard
 - Facebook / Twitter share (cards)
 - Favicon + Favicons iOs
@@ -36,6 +38,7 @@ Cheklist before launching a website :
 
 
 ###### Version
-V1
+V1.
+
 TODO :
 - Add Babel for ES6
