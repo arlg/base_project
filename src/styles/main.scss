@@ -1,0 +1,27 @@
+@import "plugins/reset";
+@import "settings";
+@import "functions";
+@import "fonts/fonts";
+@import "grid";
+
+body{
+
+}
+
+/**
+	Common styles for the whole app
+**/
+@import "common.scss";
+
+
+/**
+	VIEWS
+**/
+@import "views/header.scss";
+@import "views/footer.scss";
+
+
+/**
+	Media queries
+**/
+@import "media-queries.scss";
