@@ -9,6 +9,7 @@ Base html, htaccess and tips from [HTML 5 Boilerplate ](https://html5boilerplate
 - Name project in package.json
 - Check gulpfile
 - npm i
+- Update npm packages with [check-updates](https://www.npmjs.com/package/npm-check-updates)
 
 ###### Development
 - Follow Guidelines :

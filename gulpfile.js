@@ -3,7 +3,6 @@
 */
 var gulp = require('gulp'),
     sass = require('gulp-ruby-sass'),
-    autoprefixer = require('gulp-autoprefixer'),
     cssnano = require('gulp-cssnano'),
     jshint = require('gulp-jshint'),
     uglify = require('gulp-uglify'),
@@ -11,9 +10,10 @@ var gulp = require('gulp'),
     concat = require('gulp-concat'),
     cache = require('gulp-cache'),
     livereload = require('gulp-livereload'),
-    sourcemaps = require('gulp-sourcemaps');
-
-var spritesmith = require('gulp.spritesmith');
+    sourcemaps = require('gulp-sourcemaps'),
+    postcss      = require('gulp-postcss'),
+    autoprefixer = require('autoprefixer'),
+    spritesmith = require('gulp.spritesmith');
 
 
 /*******************
@@ -29,7 +29,9 @@ var spritesmith = require('gulp.spritesmith');
 **/
 gulp.task('styles', function() {
     return sass('src/styles/main.scss', { style: 'expanded' })
-      .pipe(autoprefixer("last 2 versions"))
+      .pipe(sourcemaps.init())
+      .pipe( postcss( [autoprefixer("last 2 versions")] ))
+      .pipe(sourcemaps.write('.'))
       .pipe(gulp.dest('www/assets/css'))
       .pipe(livereload())
 });
@@ -40,8 +42,6 @@ gulp.task('styles', function() {
 **/
 gulp.task('scripts-app', function() {
   return gulp.src('src/scripts/app/**/*.js')
-    // .pipe(jshint('.jshintrc'))
-    // .pipe(jshint.reporter('default'))
     .pipe(sourcemaps.init())
     .pipe(concat('main.js'))
     .pipe(sourcemaps.write())
