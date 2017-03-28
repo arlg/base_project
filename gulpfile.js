@@ -28,12 +28,12 @@ var gulp = require('gulp'),
 *   Compiles styles
 **/
 gulp.task('styles', function() {
-    return sass('src/styles/main.scss', { style: 'expanded' })
-      .pipe(sourcemaps.init())
-      .pipe( postcss( [autoprefixer("last 2 versions")] ))
-      .pipe(sourcemaps.write('.'))
+    return sass('src/styles/main.scss', { style: 'expanded', sourcemap: true })
+      // .pipe(sourcemaps.init())
+      // .pipe( postcss( [autoprefixer("last 2 versions")] )) // No need for dev in Chrome
+      .pipe(sourcemaps.write()) // Working sourcemaps and livereload needs to be inline
       .pipe(gulp.dest('www/assets/css'))
-      .pipe(livereload())
+      .pipe(livereload());
 });
 
 
@@ -46,6 +46,7 @@ gulp.task('scripts-app', function() {
     .pipe(concat('main.js'))
     .pipe(sourcemaps.write())
     .pipe(gulp.dest('www/assets/js/app'))
+    .pipe(livereload());
 });
 
 
@@ -56,8 +57,8 @@ gulp.task('scripts-jshint', function() {
   return gulp.src('src/scripts/app/**/*.js')
     .pipe(jshint('.jshintrc'))
     .pipe(jshint.reporter('default'))
-    .pipe(concat('main.js'))
-    .pipe(gulp.dest('www/assets/js/app'))
+    // .pipe(concat('main.js'))
+    // .pipe(gulp.dest('www/assets/js/app')) // No need to write
 });
 
 
@@ -88,9 +89,9 @@ gulp.task('styles-prod', function() {
   return sass('src/styles/main.scss', { style: 'expanded'})
     .pipe(autoprefixer("last 2 versions"))
     .pipe(gulp.dest('www/assets/css'))
-    .pipe(rename({suffix: '.min'}))
+    // .pipe(rename({suffix: '.min'})) // Keep the same file
     .pipe(cssnano())
-    .pipe(gulp.dest('www/assets/css'))
+    .pipe(gulp.dest('www/assets/css'));
 });
 
 
@@ -101,7 +102,7 @@ gulp.task('scripts-app-prod', function() {
   return gulp.src('src/scripts/app/**/*.js')
     .pipe(concat('main.js'))
     .pipe(gulp.dest('www/assets/js/app'))
-    .pipe(rename({suffix: '.min'}))
+    // .pipe(rename({suffix: '.min'}))
     .pipe(uglify())
     .pipe(gulp.dest('www/assets/js/app'));
 });
