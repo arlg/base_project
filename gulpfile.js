@@ -30,7 +30,7 @@ var gulp = require('gulp'),
 gulp.task('styles', function() {
     return sass('src/styles/main.scss', { style: 'expanded', sourcemap: true })
       // .pipe(sourcemaps.init())
-      // .pipe( postcss( [autoprefixer("last 2 versions")] )) // No need for dev in Chrome
+      .pipe( postcss( [autoprefixer("last 2 versions")] ) ) // No need for dev in Chrome
       .pipe(sourcemaps.write()) // Working sourcemaps and livereload needs to be inline
       .pipe(gulp.dest('www/assets/css'))
       .pipe(livereload());
@@ -87,7 +87,7 @@ gulp.task('scripts-plugins', function() {
 **/
 gulp.task('styles-prod', function() {
   return sass('src/styles/main.scss', { style: 'expanded'})
-    .pipe(autoprefixer("last 2 versions"))
+    .pipe(postcss( [autoprefixer("last 2 versions")] ))
     .pipe(gulp.dest('www/assets/css'))
     // .pipe(rename({suffix: '.min'})) // Keep the same file
     .pipe(cssnano())
