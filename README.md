@@ -36,10 +36,5 @@ Cheklist before launching a website :
 - Test HTML in W3C
 - Fill html lang attribute
 
-
-
 ###### Version
-V1.
-
-TODO :
-- Add Babel for ES6
+V1.2

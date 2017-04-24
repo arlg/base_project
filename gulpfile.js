@@ -2,18 +2,25 @@
     Loads the plugins
 */
 var gulp = require('gulp'),
-    sass = require('gulp-ruby-sass'),
+    sass = require('gulp-sass'),
     cssnano = require('gulp-cssnano'),
     jshint = require('gulp-jshint'),
     uglify = require('gulp-uglify'),
     rename = require('gulp-rename'),
     concat = require('gulp-concat'),
-    cache = require('gulp-cache'),
     livereload = require('gulp-livereload'),
     sourcemaps = require('gulp-sourcemaps'),
     postcss      = require('gulp-postcss'),
     autoprefixer = require('autoprefixer'),
-    spritesmith = require('gulp.spritesmith');
+    spritesmith = require('gulp.spritesmith'),
+    babel = require("gulp-babel");
+
+/***********
+    VARS
+************/
+var DEST = 'www/assets';
+var SOURCE_STYLES = 'src/styles';
+var SOURCE_SCRIPTS = 'src/scripts';
 
 
 /*******************
@@ -28,12 +35,14 @@ var gulp = require('gulp'),
 *   Compiles styles
 **/
 gulp.task('styles', function() {
-    return sass('src/styles/main.scss', { style: 'expanded', sourcemap: true })
-      // .pipe(sourcemaps.init())
-      .pipe( postcss( [autoprefixer("last 2 versions")] ) ) // No need for dev in Chrome
-      .pipe(sourcemaps.write()) // Working sourcemaps and livereload needs to be inline
-      .pipe(gulp.dest('www/assets/css'))
-      .pipe(livereload());
+
+    return gulp.src(SOURCE_STYLES+'/main.scss')
+    .pipe(sourcemaps.init())
+    .pipe( postcss( [autoprefixer("last 2 versions")] ) )
+    .pipe(sass({outputStyle: 'expanded'}).on('error', sass.logError))
+    .pipe(sourcemaps.write())
+    .pipe(gulp.dest(DEST+'/css'))
+    .pipe(livereload());
 });
 
 
@@ -41,11 +50,12 @@ gulp.task('styles', function() {
 *   Compiles scripts
 **/
 gulp.task('scripts-app', function() {
-  return gulp.src('src/scripts/app/**/*.js')
+  return gulp.src(SOURCE_SCRIPTS+'/app/**/*.js')
     .pipe(sourcemaps.init())
+    .pipe(babel())
     .pipe(concat('main.js'))
     .pipe(sourcemaps.write())
-    .pipe(gulp.dest('www/assets/js/app'))
+    .pipe(gulp.dest(DEST+'/js/app'))
     .pipe(livereload());
 });
 
@@ -54,27 +64,23 @@ gulp.task('scripts-app', function() {
 *   JSHINT scripts
 **/
 gulp.task('scripts-jshint', function() {
-  return gulp.src('src/scripts/app/**/*.js')
+  return gulp.src(SOURCE_SCRIPTS+'/app/**/*.js')
     .pipe(jshint('.jshintrc'))
     .pipe(jshint.reporter('default'))
     // .pipe(concat('main.js'))
-    // .pipe(gulp.dest('www/assets/js/app')) // No need to write
+    // .pipe(gulp.dest(DEST+'/js/app')) // No need to write
 });
 
 
 /**
-*   Compiles and minify plugin directory
+*   Compiles plugin directory
 **/
 gulp.task('scripts-plugins', function() {
   return gulp.src(
-    [
-      'src/scripts/plugins/**/*.js'
-    ]
+    [ SOURCE_SCRIPTS+'/plugins/**/*.js' ]
     )
     .pipe(concat('plugins.js'))
-    .pipe(rename({suffix: '.min'}))
-    .pipe(uglify())
-    .pipe(gulp.dest('www/assets/js/plugins'));
+    .pipe(gulp.dest(DEST+'/js/plugins'));
 });
 
 
@@ -86,12 +92,11 @@ gulp.task('scripts-plugins', function() {
 *   Compiles and minify styles
 **/
 gulp.task('styles-prod', function() {
-  return sass('src/styles/main.scss', { style: 'expanded'})
-    .pipe(postcss( [autoprefixer("last 2 versions")] ))
-    .pipe(gulp.dest('www/assets/css'))
-    // .pipe(rename({suffix: '.min'})) // Keep the same file
+    return gulp.src(SOURCE_STYLES+'/main.scss')
+    .pipe( postcss( [autoprefixer("last 2 versions")] ) )
+    .pipe(sass({outputStyle: 'expanded'}).on('error', sass.logError))
     .pipe(cssnano())
-    .pipe(gulp.dest('www/assets/css'));
+    .pipe(gulp.dest(DEST+'/css'))
 });
 
 
@@ -99,12 +104,27 @@ gulp.task('styles-prod', function() {
 *   Compiles and minify scripts
 **/
 gulp.task('scripts-app-prod', function() {
-  return gulp.src('src/scripts/app/**/*.js')
+  return gulp.src(SOURCE_SCRIPTS+'/app/**/*.js')
     .pipe(concat('main.js'))
-    .pipe(gulp.dest('www/assets/js/app'))
+    .pipe(babel())
+    .pipe(gulp.dest(DEST+'/js/app'))
     // .pipe(rename({suffix: '.min'}))
     .pipe(uglify())
-    .pipe(gulp.dest('www/assets/js/app'));
+    .pipe(gulp.dest(DEST+'/js/app'));
+});
+
+/**
+*   Compiles and minify plugin directory
+**/
+gulp.task('scripts-plugins-prod', function() {
+  return gulp.src(
+    [
+      SOURCE_SCRIPTS+'/plugins/**/*.js'
+    ]
+    )
+    .pipe(concat('plugins.min.js'))
+    .pipe(uglify())
+    .pipe(gulp.dest(DEST+'/js/plugins'));
 });
 
 
@@ -114,14 +134,14 @@ gulp.task('scripts-app-prod', function() {
 **/
 gulp.task('sprite', function () {
 
-  var spriteData = gulp.src('www/assets/img/sprites/*.png').pipe(spritesmith({
+  var spriteData = gulp.src(DEST+'/img/sprites/*.png').pipe(spritesmith({
     imgName: 'sprite.png',
     imgPath: '../img/sprite.png',
     cssName: '_sprite.sass'
   }));
 
-  spriteData.img.pipe(gulp.dest('www/assets/img'));
-  spriteData.css.pipe(gulp.dest('src/styles/'));
+  spriteData.img.pipe(gulp.dest(DEST+'/img'));
+  spriteData.css.pipe(gulp.dest(SOURCE_STYLES+'/'));
 
 });
 
@@ -139,10 +159,10 @@ gulp.task('watch', function() {
   livereload.listen();
 
   // Watch .scss files
-  gulp.watch('src/styles/**/*.scss', ['styles']);
+  gulp.watch(SOURCE_STYLES+'/**/*.scss', ['styles']);
 
   // Watch .js files
-  gulp.watch('src/scripts/**/*.js', ['scripts-app']);
+  gulp.watch(SOURCE_SCRIPTS+'/app/**/*.js', ['scripts-app']);
 
 
 });
@@ -150,4 +170,4 @@ gulp.task('watch', function() {
 /**
 *  Compiles and minify scripts + style
 **/
-gulp.task('prod', ['styles-prod', 'scripts-app-prod']);
+gulp.task('prod', ['styles-prod', 'scripts-app-prod', 'scripts-plugins-app-prod']);

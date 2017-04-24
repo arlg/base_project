@@ -1,29 +1,24 @@
-var W = W || {},
-    EE;
+class Website{
 
-W.App = (function(){
-
-    function init(){
-
-        build();
+    constructor(){
 
     }
 
-    function build(){
+    init(){
+        console.log('Website::init')
+    }
+
+    _initEvents(){
 
     }
 
-    return {
-        init : init
-    };
-
-})();
-
+}
 
 
 // Entry point
 document.addEventListener('DOMContentLoaded', function(){
 
-    W.App.init();
+    const website = new Website();
+    website.init();
 
 });
