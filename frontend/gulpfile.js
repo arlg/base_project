@@ -18,10 +18,9 @@ var gulp = require('gulp'),
 /***********
     VARS
 ************/
-var DEST = 'www/assets';
+var DEST = '../www/assets';
 var SOURCE_STYLES = 'src/styles';
 var SOURCE_SCRIPTS = 'src/scripts';
-
 
 /*******************
     SINGLE TASKS
