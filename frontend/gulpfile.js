@@ -52,6 +52,11 @@ gulp.task('scripts-app', function() {
   return gulp.src(SOURCE_SCRIPTS+'/app/**/*.js')
     .pipe(sourcemaps.init())
     .pipe(babel())
+    .on('error', function(e) {
+      console.log('>>> ERROR', e);
+      // emit here
+      this.emit('end');
+    })
     .pipe(concat('main.js'))
     .pipe(sourcemaps.write())
     .pipe(gulp.dest(DEST+'/js/app'))
@@ -121,7 +126,7 @@ gulp.task('scripts-plugins-prod', function() {
       SOURCE_SCRIPTS+'/plugins/**/*.js'
     ]
     )
-    .pipe(concat('plugins.min.js'))
+    .pipe(concat('plugins.js'))
     .pipe(uglify())
     .pipe(gulp.dest(DEST+'/js/plugins'));
 });

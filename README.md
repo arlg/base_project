@@ -37,4 +37,4 @@ Cheklist before launching a website :
 - Fill html lang attribute
 
 ###### Version
-V1.2
+V1.2.2
