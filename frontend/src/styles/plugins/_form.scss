@@ -1,0 +1,83 @@
+/**
+    Reset / base styles for forms
+**/
+
+input{
+    border: 0;
+}
+
+input[type="submit"]{
+    cursor: pointer;
+
+    // Placeholder style
+    // &::-webkit-input-placeholder {
+    //
+    // }
+    // &::-moz-placeholder {
+    //
+    // }
+    // &:-ms-input-placeholder {
+    //
+    // }
+
+    &:focus{
+        outline: none;
+    }
+}
+
+/**
+    Base style for a custom select
+**/
+select{
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    cursor: pointer;
+
+    border-radius: 0;
+    // background:url('../img/form/select_arrow.png') #FFF no-repeat 100%;
+}
+
+/**
+    - Base style for a custom checkbox
+    - Uncomment to use it
+    - Html : 
+    <div class="Checkbox">
+        <div class="Checkbox__box">
+            <input type="checkbox" name="" value="" id="check">
+            <label for="check"></label>
+        </div>
+        <p class="Checkbox__text"></p>
+    </div>
+**/
+// .Checkbox{
+//     display: flex;
+//
+//     &__box{
+//         position: relative;
+//         display: inline-block;
+//         // height: 16px;
+//         vertical-align: middle;
+//
+//         input{
+//             visibility: hidden;
+//
+//             &:checked + label{
+//                 // @include sprite($checkbox-check);
+//             }
+//         }
+//         label{
+//             // @include sprite($checkbox);
+//             cursor: pointer;
+//             position: absolute; top: 0; left: 0;
+//         }
+//     }
+//
+//
+//     &__text{
+//         display: inline-block;
+//         vertical-align: middle;
+//         margin: 0 0 0 4px;
+//     }
+//
+// }
