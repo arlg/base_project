@@ -35,13 +35,18 @@ select{
     cursor: pointer;
 
     border-radius: 0;
+
+    &:focus {
+        outline: 0;
+    }
+
     // background:url('../img/form/select_arrow.png') #FFF no-repeat 100%;
 }
 
 /**
     - Base style for a custom checkbox
     - Uncomment to use it
-    - Html : 
+    - Html :
     <div class="Checkbox">
         <div class="Checkbox__box">
             <input type="checkbox" name="" value="" id="check">
