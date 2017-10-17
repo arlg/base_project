@@ -1,3 +1,4 @@
 body{
-    background: #FFF
+    background: #FFF;
+    @include font('[FONT NAME]', 16, 40, 28);
 }

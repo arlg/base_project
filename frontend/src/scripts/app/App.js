@@ -2,10 +2,12 @@ class Website{
 
     constructor(){
 
+
+    	this.init();
     }
 
     init(){
-        console.log('Website::init')
+        console.log('Website::init');
     }
 
     _initEvents(){
@@ -19,6 +21,5 @@ class Website{
 document.addEventListener('DOMContentLoaded', function(){
 
     const website = new Website();
-    website.init();
 
 });

@@ -1,0 +1,21 @@
+/**
+    Font functions
+    @param $family : name
+    @param $size : photoshop size in pixels
+    @letterSpacing : Photoshop letter spacing (no unit)
+    @lineHeight : Photoshop line-height in pixels
+**/
+@mixin font( $family , $size , $letterSpacing : 0 , $lineHeight: 1 ) {
+
+    @if $lineHeight != 1{
+		$lineHeight : ( $lineHeight / $size );
+   	}
+
+	font: ( ( $size / $defaultFontSize ) * 1rem )#{"/"}( $lineHeight ) "#{$fontName}#{$family}", Helvetica, Arial, sans-serif;
+
+   	@if $letterSpacing != 0{
+		letter-spacing: ( $letterSpacing / 1000 ) * 1em;
+   	}
+
+
+}

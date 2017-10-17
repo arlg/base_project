@@ -2,7 +2,7 @@
 Base Html / CSS / Js for website development
 
 ###### Sources
-Base html, htaccess and tips from [HTML 5 Boilerplate ](https://html5boilerplate.com/)
+Base html, htaccess and tips from [HTML 5 Boilerplate](https://html5boilerplate.com/)
 
 ###### Before development
 - Clone this base project
@@ -37,4 +37,4 @@ Cheklist before launching a website :
 - Fill html lang attribute
 
 ###### Version
-V1.2.2
+V1.5
