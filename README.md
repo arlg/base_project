@@ -1,5 +1,5 @@
 # base_project
-Base Html / CSS / Js for website development
+Base Html / SCSS / Js for website development
 
 ###### Sources
 Base html, htaccess and tips from [HTML 5 Boilerplate](https://html5boilerplate.com/)
