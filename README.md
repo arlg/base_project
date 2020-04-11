@@ -1,3 +1,5 @@
+_ This is my old starter boilerplate, do not use it :) _
+
 # base_project
 Base Html / SCSS / Js for website development
 
